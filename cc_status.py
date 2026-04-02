@@ -12,11 +12,23 @@ from datetime import datetime, timezone, timedelta
 
 BAR_WIDTH = 10
 
+GREEN  = "\033[32m"
+YELLOW = "\033[33m"
+RED    = "\033[31m"
+RESET  = "\033[0m"
+
 
 def thermometer(pct: float, width: int = BAR_WIDTH) -> str:
     ratio = max(0.0, min(100.0, pct)) / 100.0
     filled = round(ratio * width)
-    return "[" + "█" * filled + "░" * (width - filled) + "]"
+    if pct <= 50:
+        color = GREEN
+    elif pct <= 80:
+        color = YELLOW
+    else:
+        color = RED
+    bar = "█" * filled + "░" * (width - filled)
+    return f"[{color}{bar}{RESET}]"
 
 
 def shorten_path(path: str) -> str:
