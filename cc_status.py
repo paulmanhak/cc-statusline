@@ -7,8 +7,9 @@ Data přichází přes stdin jako JSON od Claude Code (každý agent posílá sv
 """
 
 import json
+import os
 import sys
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 
 BAR_WIDTH = 10
 
@@ -32,7 +33,6 @@ def thermometer(pct: float, width: int = BAR_WIDTH) -> str:
 
 
 def shorten_path(path: str) -> str:
-    import os
     home = os.path.expanduser("~")
     if path.startswith(home):
         return "~" + path[len(home):]
@@ -43,7 +43,7 @@ def shorten_path(path: str) -> str:
 
 
 def fmt_reset(resets_at: int) -> str:
-    """Vrátí 'za HH:MM' do resetu."""
+    """Vrátí čas do resetu ve formátu 'Xh Ymin'."""
     now = datetime.now(timezone.utc)
     target = datetime.fromtimestamp(resets_at, tz=timezone.utc)
     delta = target - now
@@ -78,7 +78,7 @@ def main():
     burn_pct   = limit_data.get("used_percentage", 0)
     resets_at  = limit_data.get("resets_at", 0)
     burn_bar   = thermometer(burn_pct)
-    reset_str  = fmt_reset(resets_at) if resets_at else "--:--"
+    reset_str  = fmt_reset(resets_at) if resets_at else "0h 0min"
 
     cwd = d.get("workspace", {}).get("current_dir", d.get("cwd", "?"))
     short_path = shorten_path(cwd)
