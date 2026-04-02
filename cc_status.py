@@ -85,8 +85,8 @@ def main():
 
     print(
         f"{model_name} | "
-        f"Kontext {ctx_bar} {ctx_pct}% | "
-        f"Tokeny {burn_bar} {burn_pct}% reset {reset_str} | "
+        f"Kontext {ctx_bar} {round(ctx_pct)}% | "
+        f"Tokeny {burn_bar} {round(burn_pct)}% reset {reset_str} | "
         f"{short_path}"
     )
 
