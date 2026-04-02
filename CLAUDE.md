@@ -46,7 +46,7 @@ Původní verze skriptu četla soubory přímo z `~/.claude/projects/`, což zp�
 ### Výstupní formát
 
 ```
-Sonnet 4.6 | Kontext [██░░░░░░░░] 17% | Tokeny [██░░░░░░░░] 19% reset 03:24 | ~/Prj/skoleni2
+Sonnet 4.6 | Kontext [██░░░░░░░░] 17% | Tokeny [██░░░░░░░░] 19% Reset za 2h 48min | ~/Prj/skoleni2
 ```
 
 | Pole | Zdroj v JSON |
@@ -54,7 +54,7 @@ Sonnet 4.6 | Kontext [██░░░░░░░░] 17% | Tokeny [██░░
 | Model | `model.display_name` |
 | Kontext teploměr | `context_window.used_percentage` |
 | Tokeny teploměr | `rate_limits.five_hour.used_percentage` (fallback: `seven_day`) |
-| Čas resetu | `rate_limits.five_hour.resets_at` (Unix timestamp → HH:MM) |
+| Čas resetu | `rate_limits.five_hour.resets_at` (Unix timestamp → `Xh Ymin`) |
 | Cesta | `workspace.current_dir` zkrácená na `~/...` |
 
 ### Barevné kódování teploměrů
@@ -114,4 +114,5 @@ python3 -c "import json; d=json.load(open('/tmp/cc_status_debug.json')); print(d
 ```bash
 echo '{"model":{"display_name":"Opus 4.6"},"context_window":{"used_percentage":85},"rate_limits":{"five_hour":{"used_percentage":60,"resets_at":9999999999}},"workspace":{"current_dir":"/home/paulman/test"}}' \
   | python3 cc_status.py
+# → Opus 4.6 | Kontext [██████████] 85% | Tokeny [██████░░░░] 60% Reset za ...h ...min | ~/test
 ```

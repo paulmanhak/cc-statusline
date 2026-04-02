@@ -3,7 +3,7 @@
 Statusline skript pro [Claude Code](https://claude.ai/code) zobrazující stav aktuální relace jako jeden řádek v terminálu.
 
 ```
-Sonnet 4.6 | Kontext [██░░░░░░░░] 17% | Tokeny [██░░░░░░░░] 19% reset 03:24 | ~/Prj/skoleni2
+Sonnet 4.6 | Kontext [██░░░░░░░░] 17% | Tokeny [██░░░░░░░░] 19% Reset za 2h 48min | ~/Prj/skoleni2
 ```
 
 ## Co zobrazuje
