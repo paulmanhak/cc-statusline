@@ -51,7 +51,7 @@ def fmt_reset(resets_at: int) -> str:
         return "brzy"
     h, rem = divmod(int(delta.total_seconds()), 3600)
     m = rem // 60
-    return f"{h:02d}:{m:02d}"
+    return f"{h}h {m}min"
 
 
 def main():
@@ -86,7 +86,7 @@ def main():
     print(
         f"{model_name} | "
         f"Kontext {ctx_bar} {round(ctx_pct)}% | "
-        f"Tokeny {burn_bar} {round(burn_pct)}% reset {reset_str} | "
+        f"Tokeny {burn_bar} {round(burn_pct)}% Reset za {reset_str} | "
         f"{short_path}"
     )
 
