@@ -19,16 +19,26 @@ RED    = "\033[31m"
 RESET  = "\033[0m"
 
 
+PARTIAL = " ▏▎▍▌▋▊▉"  # index = počet osmin dílku
+
+
 def thermometer(pct: float, width: int = BAR_WIDTH) -> str:
     ratio = max(0.0, min(100.0, pct)) / 100.0
-    filled = round(ratio * width)
+    # Rozlišení na osminy dílku; nenulová hodnota ukáže aspoň nejmenší dílek
+    eighths = round(ratio * width * 8)
+    if pct > 0 and eighths == 0:
+        eighths = 1
+    full, part = divmod(eighths, 8)
     if pct <= 50:
         color = GREEN
     elif pct <= 80:
         color = YELLOW
     else:
         color = RED
-    bar = "█" * filled + "░" * (width - filled)
+    bar = "█" * full
+    if part:
+        bar += PARTIAL[part]
+    bar += "░" * (width - len(bar))
     return f"[{color}{bar}{RESET}]"
 
 
