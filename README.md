@@ -3,7 +3,7 @@
 Statusline skript pro [Claude Code](https://claude.ai/code) zobrazující stav aktuální relace jako jeden řádek v terminálu.
 
 ```
-Sonnet 4.6 | Kontext [██░░░░░░░░] 17% | Tokeny [██░░░░░░░░] 19% Reset za 2h 48min | ~/Prj/skoleni2
+Sonnet 4.6 | Kontext [██░░░░░░░░] 17% | Tokeny [██░░░░░░░░] 19% Reset za 2h 48min | ~/Prj/skoleni2 (master)
 ```
 
 ## Co zobrazuje
@@ -13,7 +13,7 @@ Sonnet 4.6 | Kontext [██░░░░░░░░] 17% | Tokeny [██░░
 | **Model** | Název aktuálně používaného modelu |
 | **Kontext** | Zaplnění kontextového okna (teploměr + %) |
 | **Tokeny** | Spotřeba 5hodinového rate limitu (teploměr + %) + čas do resetu |
-| **Cesta** | Aktuální pracovní adresář zkrácený na `~/...` |
+| **Cesta** | Aktuální pracovní adresář zkrácený na `~/...` + git větev v závorce, je-li k dispozici |
 
 Teploměry jsou barevné: zelená ≤ 50 %, žlutá 51–80 %, červená > 80 %.
 

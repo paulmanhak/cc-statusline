@@ -10,7 +10,7 @@ Python skript zobrazující stav aktuální Claude Code relace jako jeden řáde
 
 ## Jak to funguje
 
-Claude Code spouští příkaz z `statusLine.command` při každém refreshi a posílá skriptu přes **stdin** JSON objekt s daty aktuální relace. Každý běžící agent dostává svá vlastní data – skript nečte žádné soubory z disku.
+Claude Code spouští příkaz z `statusLine.command` při každém refreshi a posílá skriptu přes **stdin** JSON objekt s daty aktuální relace. Každý běžící agent dostává svá vlastní data – skript nečte žádné soubory relací z disku (jen volá `git` pro zjištění větve).
 
 Původní verze skriptu četla soubory přímo z `~/.claude/projects/`, což způsobovalo, že všechny souběžně běžící agenty zobrazovaly stejná data (z nejnovějšího souboru). Přepis na stdin tento problém řeší.
 
@@ -46,7 +46,7 @@ Původní verze skriptu četla soubory přímo z `~/.claude/projects/`, což zp�
 ### Výstupní formát
 
 ```
-Sonnet 4.6 | Kontext [██░░░░░░░░] 17% | Tokeny [██░░░░░░░░] 19% Reset za 2h 48min | ~/Prj/skoleni2
+Sonnet 4.6 | Kontext [██░░░░░░░░] 17% | Tokeny [██░░░░░░░░] 19% Reset za 2h 48min | ~/Prj/skoleni2 (master)
 ```
 
 | Pole | Zdroj v JSON |
@@ -56,6 +56,7 @@ Sonnet 4.6 | Kontext [██░░░░░░░░] 17% | Tokeny [██░░
 | Tokeny teploměr | `rate_limits.five_hour.used_percentage` (fallback: `seven_day`) |
 | Čas resetu | `rate_limits.five_hour.resets_at` (Unix timestamp → `Xh Ymin`) |
 | Cesta | `workspace.current_dir` zkrácená na `~/...` |
+| Větev | `git -C <current_dir> branch --show-current` (není v JSON; vynechá se mimo repozitář) |
 
 ### Barevné kódování teploměrů
 
