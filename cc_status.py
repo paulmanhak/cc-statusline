@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
 Claude Code statusline – výstup: jedna řádka
-  Model | Kontext [████░░] XX% | Tokeny [████░░] XX% reset HH:MM | ~/cesta
+  Model | Kontext [████░░] XX% | Tokeny [████░░] XX% Reset za Xh Ymin | ~/cesta (větev)
 
 Data přichází přes stdin jako JSON od Claude Code (každý agent posílá svá vlastní data).
 """
 
 import json
 import os
+import subprocess
 import sys
 from datetime import datetime, timezone
 
@@ -64,6 +65,17 @@ def fmt_reset(resets_at: int) -> str:
     return f"{h}h {m}min"
 
 
+def git_branch(cwd: str) -> str:
+    """Aktuální větev v cwd; prázdný řetězec mimo repozitář nebo při detached HEAD."""
+    try:
+        return subprocess.run(
+            ["git", "-C", cwd, "branch", "--show-current"],
+            capture_output=True, text=True, timeout=1,
+        ).stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        return ""
+
+
 def main():
     raw = sys.stdin.read().strip()
     if not raw:
@@ -91,7 +103,8 @@ def main():
     reset_str  = fmt_reset(resets_at) if resets_at else "0h 0min"
 
     cwd = d.get("workspace", {}).get("current_dir", d.get("cwd", "?"))
-    short_path = shorten_path(cwd)
+    branch = git_branch(cwd)
+    short_path = shorten_path(cwd) + (f" ({branch})" if branch else "")
 
     print(
         f"{model_name} | "
